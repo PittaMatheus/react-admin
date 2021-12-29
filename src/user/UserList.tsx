@@ -18,7 +18,7 @@ const UserList: FC<any> = props => {
     return (
     <List
      {...props}>
-        <Datagrid rowClick="edit">
+        <Datagrid rowClick="show">
             <TextField source="id" />
             <TextField source="name" />
             <TextField source="url" />

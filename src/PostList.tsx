@@ -1,5 +1,4 @@
 // in src/posts.js
-import * as React from "react";
 import {
     List,
     Datagrid,
