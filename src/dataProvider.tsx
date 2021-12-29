@@ -8,7 +8,10 @@ interface Props {
 }
 
 export interface IGetListParams {
-    pagination: any;
+    pagination: {
+        perPage: number,
+        page:number
+    };
     sort: any;
     filter: any;
 }
@@ -20,8 +23,10 @@ export interface IPokemon {
 }
 
 const getPokemons = async (params: IGetListParams) => {
+    console.log(params)
+    let filter = "limit=" + params.pagination.perPage + "&offset=" + params.pagination.page
 
-    let resp = await Axios.get("https://pokeapi.co/api/v2/pokemon?limit=10&offset=20")
+    let resp = await Axios.get("https://pokeapi.co/api/v2/pokemon?"+ filter)
     let pokemons = resp.data.results;
     let totalPokemons = resp.data.count
     const getListPokemon = pokemons.map((i: any, idx: number) => ({ id: idx, name: i.name, url: i.url }))
@@ -32,7 +37,8 @@ const pokemonProvider: any = {
     params: { pagination: '', sort: '', filter: '' },
     getList: async (_resource: any, params: any) => {
         try {
-            const pokemon = await getPokemons(params?.filter?.document || '')
+            console.log(params)
+            const pokemon = await getPokemons(params || '')
             return pokemon
         } catch (error: any) {
             throw getError(error)
